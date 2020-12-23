@@ -60,8 +60,12 @@ def set_param(s, src, target, param, value):
 def send_discover(s, src):
     
     block = PNDCPBlockRequest(0xFF, 0xFF, 0, bytes())
-    dcp   = PNDCPHeader(0xfefe, PNDCPHeader.IDENTIFY, PNDCPHeader.REQUEST, 0x012345, 0, len(block), payload=block)
+    #dcp   = PNDCPHeader(0xfefe, PNDCPHeader.IDENTIFY, PNDCPHeader.REQUEST, 0x012345, 0, len(block), payload=block)
+    #dcp = PNDCPHeader(0xfefe, PNDCPHeader.IDENTIFY, PNDCPHeader.REQUEST, 0x1, 0, len(block), payload=block)
+    dcp = PNDCPHeader(0xfefe, PNDCPHeader.IDENTIFY, PNDCPHeader.REQUEST, 0x1, 0x1, len(block), payload=block)
+    #host_mac = s2mac("54:ee:75:4c:13:bf")
     eth   = EthernetVLANHeader(s2mac("01:0e:cf:00:00:00"), src, 0x8100, 0, PNDCPHeader.ETHER_TYPE, payload=dcp)
+    #eth = EthernetVLANHeader(s2mac("01:0e:cf:00:00:00"), host_mac, 0x8100, 0, PNDCPHeader.ETHER_TYPE, payload=dcp)
     
     s.send(bytes(eth))
 
